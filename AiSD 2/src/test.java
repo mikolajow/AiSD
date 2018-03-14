@@ -6,22 +6,22 @@ public class test {
 		
 		int[] tablica = new int[15];
 		tablica[0] = 25;
-		tablica[1] = 769;
-		tablica[2] = 345;
-		tablica[3] = 769;
-		tablica[4] = 325;
-		tablica[5] = 789;
-		tablica[6] = 35;
-		tablica[7] = 768;
-		tablica[8] = 345;
-		tablica[9] = 678;
-		tablica[10] = 345;
-		tablica[11] = 7698;
-		tablica[12] = 3245;
-		tablica[13] = 4567;
-		tablica[14] = 123;
+		tablica[1] = 14;
+		tablica[2] = 6;
+		tablica[3] = 4;
+		tablica[4] = 13;
+		tablica[5] = 5;
+		tablica[6] = 12;
+		tablica[7] = 3;
+		tablica[8] = 8;
+		tablica[9] = 2;
+		tablica[10] = 16;
+		tablica[11] = 15;
+		tablica[12] = 11;
+		tablica[13] = 9;
+		tablica[14] = 1;
 		
-		quickSort();
+		quickSort( tablica, 0 , tablica.length );
 		
 		for ( Integer i : tablica ) {
 			System.out.println(i);
@@ -31,7 +31,7 @@ public class test {
 		
 	}//koniec main
 
-	private static void quickSort() {
+	private static void quickSort( int[] tab, int poczatek, int koniec ) {
 		
 		
 		
