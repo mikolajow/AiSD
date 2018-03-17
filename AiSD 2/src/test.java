@@ -1,89 +1,73 @@
 import java.io.File;
-import java.util.ArrayList;
+import java.util.Collections;
 
 public class test {
 
 	public static void main(String[] args) {
 		
-		File plik = new File("z2data1.csv");
+		quickSorrt test = new quickSorrt(new File("z2data1.csv"));
+		quickSorrt test2 = new quickSorrt(new File("z2data2.csv"));
+		quickSorrt odCollections = new quickSorrt(new File("z2data1.csv"));
+		quickSorrt odCollections2 = new quickSorrt(new File("z2data2.csv"));
 		
-		czytnik qs1 = new czytnik(plik);
+		Collections.sort(odCollections.getLista());
+		Collections.sort(odCollections2.getLista());
 		
-		//System.out.println("Rozmiar = "+ qs1.rozmiar());
-		
-		ArrayList<Integer> lista = new ArrayList<>();
-		lista.add(9);
-		lista.add(5);
-		lista.add(8);
-		lista.add(0);
-		lista.add(1);
-		lista.add(4);
-		lista.add(3);
-		lista.add(2);
-		lista.add(6);
-		lista.add(7);
-		lista.add(5);
-		lista.add(10);
-		lista.add(7);
-		lista.add(5);
-		lista.add(2);
-		lista.add(5);
+		test.sortuj(0, (test.getLista().size() -1), 2 );
+		test2.sortuj(0, (test.getLista().size() -1), 2 );
 		
 		
+		boolean wynik = true;
+		System.out.print( "Test dla listy 1 " );
+		for ( int i = 0; i<test.getLista().size(); i++ ) {
+			if ( ! test.getLista().get(i).equals(odCollections.getLista().get(i) ) ) {
+				wynik = false;
+				System.out.println( test.getLista().get(i) + "  " + odCollections.getLista().get(i) );
+			}
+		}//koniec for
 		
-		quickSorrt nowy = new quickSorrt(lista);
+		System.out.println(wynik);
+		
+		boolean wynik2 = true;
+		System.out.print( "Test dla listy 2 " );
+		for ( int i = 0; i<test2.getLista().size(); i++ ) {
+			if ( ! test2.getLista().get(i).equals(odCollections2.getLista().get(i) ) ) {
+				wynik = false;
+				System.out.println( test2.getLista().get(i) + "  " + odCollections2.getLista().get(i) );
+			}
+		}//koniec for
 		
 		
+		System.out.println(wynik2);
 		
-		System.out.println( "LISTA" );
-		for ( Integer i : nowy.getLista() ) {
-			System.out.print(i + "," );
-		}
-		System.out.println();
+		System.out.println(" ");
 		
+		System.out.println("Wyniki dla pierwszych danych: ");
+		System.out.println("Rozmiar = " + test.getLista().size());
+		System.out.println("Wartoœæ Maxymalna = " + test.getLista().get(test.getLista().size() -1) );
+		System.out.println("Wartoœæ Minimalna = " + test.getLista().get(0) );
+		System.out.println("Mediana = " + test.Mediana());
+		System.out.println("Histogram 1 : ");
+		test.histogram(10);
+		
+		System.out.println(" ");
+		
+		System.out.println("Wyniki dla drugich danych: ");
+		System.out.println("Rozmiar = " + test2.getLista().size());
+		System.out.println("Wartoœæ Maxymalna = " + test2.getLista().get(test2.getLista().size() -1) );
+		System.out.println("Wartoœæ Minimalna = " + test2.getLista().get(0) );
+		System.out.println("Mediana = " + test2.Mediana());
+		System.out.println("Histogram 2 : " );
+		
+		
+		test2.histogram(5);
+		
+		System.out.println(" ");
 		
 		/*
-		
-		System.out.println( "PARTYCJONUJ 1" );
-		
-		int q =  nowy.partycjonuj(0, lista.size() -1, 5 );
-		
-		for ( Integer i : nowy.getLista() ) {
-			System.out.print(i + "," );
-		}
-		
-		System.out.println();
-		System.out.println( "PARTYCJONUJ 2" );
-		
-		nowy.partycjonuj(0, lista.size()/2 -1, 3 );
-		
-		for ( Integer i : nowy.getLista() ) {
-			System.out.print(i + "," );
-		}
-		
-		System.out.println();
-		System.out.println( "PARTYCJONUJ 3" );
-		
-		nowy.partycjonuj(0, lista.size()/4 -1, 1 );
-		
-		for ( Integer i : nowy.getLista() ) {
-			System.out.print(i + "," );
-		}
-		
-		
-		*/
-		
-		
-		nowy.pivotOstatni(0, lista.size()-1);
-		
-		System.out.println( "PO" );
-		System.out.println();
-		for ( Integer i : nowy.getLista() ) {
-			System.out.print(i + "," );
-		}
-		System.out.println();
-		
-		
+		for (Integer i : test2.getLista()) {
+			System.out.print( i + ",");			//wyswietla liste 2
+		}*/
 		
 	}//koniec main	
 }//koniec klasy

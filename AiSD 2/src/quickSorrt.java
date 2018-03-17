@@ -1,8 +1,30 @@
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
+
 
 public class quickSorrt {
 	
 	private ArrayList<Integer> lista;
+	
+	public quickSorrt(File plik) {
+		this.lista = new ArrayList<>();
+		try( BufferedReader czytnik = new BufferedReader(new FileReader(plik))){
+			while(true) {
+				String[] tablica;
+				tablica = czytnik.readLine().split(",");
+				for ( String s : tablica ) {
+					lista.add(Integer.parseInt(s));
+				}//koniec for
+			}//koniec while
+		} catch (Exception e) {
+			// TODO: handle exception
+		//	e.printStackTrace();
+		}//koniec catch
+	}
+	
 	
 	public quickSorrt( ArrayList<Integer> lista1 ) {
 		this.lista = lista1;
@@ -10,89 +32,144 @@ public class quickSorrt {
 	
 	public ArrayList<Integer> getLista(){ return lista; }
 	
-	/*
-	public void sortuj ( int numerWersji ) {
-		switch (numerWersji) {
+	
+	public void sortuj( int indexPoczatkowy, int indexKoncowy, int wersja) {
+		
+		int pivot;
+		
+		//miejsce na wyznaczanie pivota
+		
+		switch (wersja) {
 		case 1:
-			pivotOstatni();
+			 pivot  = lista.get(indexKoncowy);
 			break;
 		case 2:
-			pivotLosowy();
+			int index1 = ThreadLocalRandom.current().nextInt(indexPoczatkowy, indexKoncowy + 1) ;
+			if ( index1 > indexPoczatkowy && index1 < indexKoncowy )
+				pivot  = lista.get(index1);
+			else pivot  = lista.get(indexKoncowy);
 			break;
-		default:
-			pivotMediana();
+		default :
+			int index = (lista.get(indexPoczatkowy) + lista.get(indexKoncowy) + lista.get((indexPoczatkowy + indexKoncowy)/2 ))/3;
+			if ( index > indexPoczatkowy && index < indexKoncowy )
+				pivot  = lista.get(index);
+			else pivot  = lista.get(indexKoncowy);
 			break;
-		}//konice switch
-	}//koniec sortuj
-	
-	*/
-	
-	public int partycjonuj( int indexPoczatkowy, int indexKoncowy, int pivot ) {
-		pivot  = lista.get(indexKoncowy);
-		while ( true ) {
-			while ( lista.get(indexPoczatkowy) < pivot ) {			//nie interesuj¹ mnie elementy równe pivotowi bo chce je po lewej stronie pivota
-				indexPoczatkowy++;
+		}
+		
+		//partycjonowanie:
+		
+        int i = indexPoczatkowy;
+        int j = indexKoncowy;
+		
+		while ( i <= j ) {
+			while ( lista.get(i) < pivot ) {			//partycjonowanie, szukam elementu wiekszego lub równego pivotovi
+				i++;
 			}//koniec while
-			while (lista.get(indexKoncowy) > pivot ) {
-				indexKoncowy--;
-			}//koniec while
-			if ( indexPoczatkowy < indexKoncowy ) {
-				if ( lista.get(indexPoczatkowy) == lista.get(indexKoncowy) ) { indexPoczatkowy++; }	//jak sa takie same to przeskakuje z indexem do
-																									//przodu zeby petla nie dzia³a³a w kó³ko
+			while (lista.get(j) > pivot ) {				//tu szukam elementu mniejszego lub równego pivotovi z drugiej strony list
+				j--;									//elementy równe pivotowi mog¹ sie znalezc z dowolnej strony od pivota
+			}//koniec while								//bo w kolejnych etapach i tak przez partycjonowanie wyl¹duj¹ obok niego
+			if ( i <= j  ) {
 				
-				//System.out.println( "index poczatkowy = " + indexPoczatkowy + " index koncowy = " + indexKoncowy);
+				int czajnik = lista.get(i);				//jak znajde takie dwa elementy to przesówam je
+				lista.remove(i);
+				lista.add(i, lista.get(j - 1));				//bo indexy sie poprzesówa³y o 1 -_-
+				lista.remove(j);							//zamieniam miejscami
+				lista.add(j, czajnik);
 				
-				
-				int czajnik = lista.get(indexPoczatkowy);
-				lista.remove(indexPoczatkowy);
-				lista.add(indexPoczatkowy, lista.get(indexKoncowy - 1));		//bo indexy sie poprzesówa³y o 1 -_-
-				lista.remove(indexKoncowy);										//zamieniam miejscami
-				lista.add(indexKoncowy, czajnik);
-				
-				
-				
-				/*
-				for ( Integer i : lista ) {
-					System.out.print(i + ",");
-				} 
-				System.out.println(" ");
-				*/
-				
+				i++;								//przechodze na nastepny index z obu stron 
+				j--;
+
 			}//koniec if
-			else {
-				//System.out.println(indexKoncowy);
-				return indexKoncowy;		
-			}
 		}//koniec zwenetrznego while
 		
-		
-		//System.out.println("Index koncowy = " + (indexPoczatkowy-1) );
-	}//koniec partycjonuj
+        if (indexPoczatkowy < j) {				//wywo³uje metode rekurencyjnie dla aktualnych i,j
+            sortuj(indexPoczatkowy, j, wersja);	
+        }
+        if (i < indexKoncowy) {
+            sortuj(i, indexKoncowy, wersja);
+        }
+	}//koniec sortuj
 	
-	
-	
-	public void pivotOstatni( int indexPoczatkowy, int indexKoncowy) {
+	public double Mediana() {
+		if ( lista.size()%2 == 1 ) {
+			return lista.get(lista.size()/2 );
+		} else {
+			return (double) ( lista.get( lista.size()/2 -1 ) + lista.get( lista.size()/2 ) ) /2;
+		}
+	}//koniec mediana
+
+
+	public void histogram( int liczbaPrzedzialow ) {
 		
-		int poczatekKolejnegoCyklu;
+		ArrayList<Integer> rozneWartosci = new ArrayList<>();
 		
-		if( indexPoczatkowy < indexKoncowy  ) {
+		for (Integer i : lista) {
+			if( !rozneWartosci.contains(i) ) {
+				rozneWartosci.add(i);						//dodaje do listy wszystkie wartosci wystepujace w liscie
+			}//koniec if
+		}//koniec for
+		
+		/*
+		for (Integer i : rozneWartosci ) {
+			System.out.print( i + ",");	
+		}
+		System.out.println(" ");
+		*/
+		
+		int liczbaRoznychWartosci = rozneWartosci.size();	//zliczam ich ilosc
+		int iloscRoznychWartosciWPrzedziale;				//do wyznaczenia idexów pierwszej i ostatniej wartosci w przedziale
+		
+		if ( liczbaRoznychWartosci % liczbaPrzedzialow == 0 ) {
+			iloscRoznychWartosciWPrzedziale = liczbaRoznychWartosci/liczbaPrzedzialow -1 ;	//gdy podzielna bez reszty to w kazdym przedziale bedzie tyle samo roznych wartosci
+		} else {
+			iloscRoznychWartosciWPrzedziale = liczbaRoznychWartosci/liczbaPrzedzialow;	//w przeciwnym wypadku w ostatnim przedziale bedzie mniej roznych wartosci
+		}//koniec else
+		
+		int index = 0;
+		int counter=0;
+		
+		while ( index < liczbaRoznychWartosci ) {
+			if ( index + iloscRoznychWartosciWPrzedziale < liczbaRoznychWartosci  ) {
+				System.out.print("<" + rozneWartosci.get(index) + "," + rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale) + ">" + "\t");
+				int wartPoczatkowa = rozneWartosci.get(index);
+				int wartoscKoncowa = rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale);
+				
+				for ( Integer i : lista ) {
+					if ( i>=wartPoczatkowa && i<= wartoscKoncowa ) {
+						System.out.print("#");
+						counter++;
+					}//koniec if
+				}//koniec for
+				
+				index++;
+				
+			} else {
+				System.out.print("<" + rozneWartosci.get(index) + "," + rozneWartosci.get( liczbaRoznychWartosci -1 ) + ">" + "\t");
+				int wartPoczatkowa = rozneWartosci.get(index);
+				int wartoscKoncowa = rozneWartosci.get( liczbaRoznychWartosci -1 );
+				
+				for ( Integer i : lista ) {
+					if ( i>=wartPoczatkowa && i<= wartoscKoncowa ) {
+						System.out.print("#");
+						counter++;
+					}//koniec if
+				}//koniec for
+				
+				index++;
+				
+			}//koniec else
 			
-			poczatekKolejnegoCyklu = partycjonuj(indexPoczatkowy, indexKoncowy, 9);		//chwilowo losowe 9  bo i tak zmieniam w partycjonowaniu
-			pivotOstatni(indexPoczatkowy, poczatekKolejnegoCyklu -1 );
-			pivotOstatni(poczatekKolejnegoCyklu + 1, indexKoncowy );
+			System.out.print ("");
+			System.out.println("");
 			
-		}//konice if
+			index = index + iloscRoznychWartosciWPrzedziale;
+			
+		}//koniec while
 		
+		System.out.println("counter = " + counter);
 		
-		
-}//koniec pivot ostatni
-	
-	
-	
-	
-	
-	
-	
+	}//koniec histogram
 	
 	
 	
