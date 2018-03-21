@@ -129,9 +129,12 @@ public class quickSorrt {
 		int index = 0;
 		int counter=0;
 		
+		
+		//dcdc
+		
 		while ( index < liczbaRoznychWartosci ) {
 			if ( index + iloscRoznychWartosciWPrzedziale < liczbaRoznychWartosci  ) {
-				System.out.print("<" + rozneWartosci.get(index) + "," + rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale) + ">" + "\t");
+				System.out.printf( "%15s" , "<" + rozneWartosci.get(index) + "," + rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale) + ">" + "\t");
 				int wartPoczatkowa = rozneWartosci.get(index);
 				int wartoscKoncowa = rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale);
 				
@@ -145,7 +148,7 @@ public class quickSorrt {
 				index++;
 				
 			} else {
-				System.out.print("<" + rozneWartosci.get(index) + "," + rozneWartosci.get( liczbaRoznychWartosci -1 ) + ">" + "\t");
+				System.out.printf( "%15s" , "<" + rozneWartosci.get(index) + "," + rozneWartosci.get( liczbaRoznychWartosci -1 ) + ">" + "\t");
 				int wartPoczatkowa = rozneWartosci.get(index);
 				int wartoscKoncowa = rozneWartosci.get( liczbaRoznychWartosci -1 );
 				
@@ -170,9 +173,6 @@ public class quickSorrt {
 		System.out.println("counter = " + counter);
 		
 	}//koniec histogram
-	
-	
-	
 }//koniec klasy
 
 

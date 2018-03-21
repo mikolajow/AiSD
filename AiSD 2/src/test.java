@@ -60,14 +60,10 @@ public class test {
 		System.out.println("Histogram 2 : " );
 		
 		
-		test2.histogram(5);
+		test2.histogram(10);
 		
 		System.out.println(" ");
 		
-		/*
-		for (Integer i : test2.getLista()) {
-			System.out.print( i + ",");			//wyswietla liste 2
-		}*/
 		
 	}//koniec main	
 }//koniec klasy
