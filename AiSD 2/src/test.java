@@ -16,7 +16,9 @@ public class test {
 		test.sortuj(0, (test.getLista().size() -1), 2 );
 		test2.sortuj(0, (test.getLista().size() -1), 2 );
 		
+		//TESTY
 		
+		/*
 		boolean wynik = true;
 		System.out.print( "Test dla listy 1 " );
 		for ( int i = 0; i<test.getLista().size(); i++ ) {
@@ -39,6 +41,8 @@ public class test {
 		
 		
 		System.out.println(wynik2);
+		*/
+		
 		
 		System.out.println(" ");
 		
@@ -60,7 +64,7 @@ public class test {
 		System.out.println("Histogram 2 : " );
 		
 		
-		test2.histogram(3);
+		test2.histogram(10);
 		
 		System.out.println(" ");
 		
