@@ -60,7 +60,7 @@ public class test {
 		System.out.println("Histogram 2 : " );
 		
 		
-		test2.histogram(10);
+		test2.histogram(3);
 		
 		System.out.println(" ");
 		

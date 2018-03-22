@@ -4,6 +4,8 @@ import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.plaf.basic.BasicTabbedPaneUI.TabbedPaneLayout;
+
 
 public class quickSorrt {
 	
@@ -100,6 +102,9 @@ public class quickSorrt {
 	}//koniec mediana
 
 
+	// HISTOGRAM -----------------------------------------------------------------------------
+	
+	
 	public void histogram( int liczbaPrzedzialow ) {
 		
 		ArrayList<Integer> rozneWartosci = new ArrayList<>();
@@ -110,12 +115,6 @@ public class quickSorrt {
 			}//koniec if
 		}//koniec for
 		
-		/*
-		for (Integer i : rozneWartosci ) {
-			System.out.print( i + ",");	
-		}
-		System.out.println(" ");
-		*/
 		
 		int liczbaRoznychWartosci = rozneWartosci.size();	//zliczam ich ilosc
 		int iloscRoznychWartosciWPrzedziale;				//do wyznaczenia idexów pierwszej i ostatniej wartosci w przedziale
@@ -129,25 +128,44 @@ public class quickSorrt {
 		int index = 0;
 		int counter=0;
 		
+		boolean skalowane = false;
 		
-		//dcdc
+		int indexTabeli = -1;
+		
+		int[] tabela = new int[liczbaPrzedzialow];
 		
 		while ( index < liczbaRoznychWartosci ) {
+			
+			indexTabeli++;
+			
+			int liczbaZnakow = 0;
+			
+			
 			if ( index + iloscRoznychWartosciWPrzedziale < liczbaRoznychWartosci  ) {
 				System.out.printf( "%15s" , "<" + rozneWartosci.get(index) + "," + rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale) + ">" + "\t");
 				int wartPoczatkowa = rozneWartosci.get(index);
 				int wartoscKoncowa = rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale);
 				
 				for ( Integer i : lista ) {
+					
 					if ( i>=wartPoczatkowa && i<= wartoscKoncowa ) {
 						System.out.print("#");
+						liczbaZnakow++;
 						counter++;
 					}//koniec if
+					
+					if ( liczbaZnakow > 100 ) {
+						skalowane = true;
+					}//koniec if
+					
 				}//koniec for
+				
+				tabela[indexTabeli] = liczbaZnakow;
 				
 				index++;
 				
-			} else {
+			}//koniec if
+			else {
 				System.out.printf( "%15s" , "<" + rozneWartosci.get(index) + "," + rozneWartosci.get( liczbaRoznychWartosci -1 ) + ">" + "\t");
 				int wartPoczatkowa = rozneWartosci.get(index);
 				int wartoscKoncowa = rozneWartosci.get( liczbaRoznychWartosci -1 );
@@ -155,9 +173,13 @@ public class quickSorrt {
 				for ( Integer i : lista ) {
 					if ( i>=wartPoczatkowa && i<= wartoscKoncowa ) {
 						System.out.print("#");
+						liczbaZnakow++;
 						counter++;
 					}//koniec if
+					
 				}//koniec for
+				
+				tabela[indexTabeli] = liczbaZnakow;
 				
 				index++;
 				
@@ -172,7 +194,96 @@ public class quickSorrt {
 		
 		System.out.println("counter = " + counter);
 		
+		for ( int i = 0; i < tabela.length; i++ ) {
+			System.out.println( tabela[i]);
+		}//koniec for
+		
+		if ( skalowane ) {
+			histogtamSkalowany(liczbaPrzedzialow, tabela);
+		}//koniec if
 	}//koniec histogram
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	private void histogtamSkalowany( int liczbaPrzedzialow, int[] tabela) {
+		System.out.println("PRZESKALOWANY HISTOGRAM");
+		ArrayList<Integer> rozneWartosci = new ArrayList<>();
+		
+		//SKALOWANIE TABLICY
+		for ( int s = 0; s < tabela.length; s++ ) {
+			tabela[s] = tabela[s]*30/100;
+		}//koniec for
+		
+		for (Integer i : lista) {
+			if( !rozneWartosci.contains(i) ) {
+				rozneWartosci.add(i);						//dodaje do listy wszystkie wartosci wystepujace w liscie
+			}//koniec if
+		}//koniec for
+		
+		
+		int liczbaRoznychWartosci = rozneWartosci.size();	//zliczam ich ilosc
+		int iloscRoznychWartosciWPrzedziale;				//do wyznaczenia idexów pierwszej i ostatniej wartosci w przedziale
+		
+		if ( liczbaRoznychWartosci % liczbaPrzedzialow == 0 ) {
+			iloscRoznychWartosciWPrzedziale = liczbaRoznychWartosci/liczbaPrzedzialow -1 ;	//gdy podzielna bez reszty to w kazdym przedziale bedzie tyle samo roznych wartosci
+		} else {
+			iloscRoznychWartosciWPrzedziale = liczbaRoznychWartosci/liczbaPrzedzialow;	//w przeciwnym wypadku w ostatnim przedziale bedzie mniej roznych wartosci
+		}//koniec else
+		
+		
+		int index = 0;
+				
+		int indexTabeli = -1;
+		
+		while ( index < liczbaRoznychWartosci ) {
+			
+			indexTabeli++;
+			
+			if ( index + iloscRoznychWartosciWPrzedziale < liczbaRoznychWartosci  ) {
+				System.out.printf( "%15s" , "<" + rozneWartosci.get(index) + "," + rozneWartosci.get(index + iloscRoznychWartosciWPrzedziale) + ">" + "\t");
+				
+				for ( int j = 0; j < tabela[indexTabeli]; j++) {
+					System.out.print("#");
+				}//koniec for
+				
+				
+				index++;
+				
+			}//koniec if
+			else {
+				System.out.printf( "%15s" , "<" + rozneWartosci.get(index) + "," + rozneWartosci.get( liczbaRoznychWartosci -1 ) + ">" + "\t");
+				
+				for ( int j = 0; j < tabela[indexTabeli]; j++) {
+					System.out.print("#");
+				}//koniec for
+				
+				
+				index++;
+				
+			}//koniec else
+			
+			System.out.print ("");
+			System.out.println("");
+			
+			index = index + iloscRoznychWartosciWPrzedziale;
+			
+		}//koniec while
+		
+		
+	}//koniec metody skalowany histogram
+	
 }//koniec klasy
 
 
