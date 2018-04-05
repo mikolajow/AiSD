@@ -24,7 +24,7 @@ public class quickSorrt {
 			// TODO: handle exception
 		//	e.printStackTrace();
 		}//koniec catch
-	}
+	}//koniec konstruktora
 	
 	
 	public quickSorrt( ArrayList<Integer> lista1 ) {
