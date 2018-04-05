@@ -1,0 +1,36 @@
+
+public class quickSort {
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}//koniec klasy
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
