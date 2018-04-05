@@ -39,6 +39,7 @@ public class quickSort {
 		int pivot;
 		
 		//miejsce na wyznaczanie pivota
+		//wybranie wersji
 		
 		switch (wersja) {
 		case 1:
@@ -57,6 +58,8 @@ public class quickSort {
 			else pivot  = lista.get(indexKoncowy);
 			break;
 		}
+		//koniec ustalania wersji
+		
 		
 		//partycjonowanie:
 		
@@ -83,8 +86,9 @@ public class quickSort {
 
 			}//koniec if
 		}//koniec zwenetrznego while
+		//koniec partycjonowania
 		
-        if (indexPoczatkowy < j) {				//wywo³uje metode rekurencyjnie dla aktualnych i,j
+        if (indexPoczatkowy < j) {					//wywo³uje metode rekurencyjnie dla aktualnych i,j
             sortuj(indexPoczatkowy, j, wersja);	
         }
         if (i < indexKoncowy) {
