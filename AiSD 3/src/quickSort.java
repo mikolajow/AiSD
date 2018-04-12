@@ -9,8 +9,16 @@ import java.util.concurrent.ThreadLocalRandom;
 public class quickSort {
 	
 	private ArrayList<Integer> lista;
+	private int maxWyokoscStosu;
+	private int liczbaZamian;
 	
+	
+	/**
+	 * @param plik
+	 */
 	public quickSort(File plik) {
+		this.maxWyokoscStosu = 0;
+		this.liczbaZamian = 0;
 		this.lista = new ArrayList<>();
 		try( BufferedReader czytnik = new BufferedReader(new FileReader(plik))){
 			while(true) {
@@ -26,13 +34,13 @@ public class quickSort {
 		}//koniec catch
 	}//koniec konstruktora
 	
-	
+
+
 	public quickSort( ArrayList<Integer> lista1 ) {
 		this.lista = lista1;
 	}//konstruktor kopiujacy
 	
 	
-	public ArrayList<Integer> getLista(){ return lista; }
 	
 	
 	
@@ -43,7 +51,9 @@ public class quickSort {
         stos stack = new stos();
         stack.push(0);
         stack.push(indexKoncowy);
-
+        
+        setMaxWyokoscStosu(stack.size());
+        
         while(!stack.isEmpty()){
         	
         	
@@ -66,6 +76,10 @@ public class quickSort {
 
             stack.push(poczatek);
             stack.push( granica -1 );
+            
+            if ( maxWyokoscStosu < stack.size() ) {
+            	maxWyokoscStosu = stack.size();
+            }
             
         }//koniec while
         
@@ -95,6 +109,7 @@ public class quickSort {
 		 
 			if( indexLewy < indexPrawy ) {
 				Collections.swap(lista, indexLewy,indexPrawy);
+				InkrementujLiczbeZamian();
 			}//koniec if
 			
 		}//koniec while
@@ -105,6 +120,7 @@ public class quickSort {
 			index++;
 		}
 		Collections.swap(lista,index, indexKoncowy);
+		InkrementujLiczbeZamian();
 		return index;
 		
 	}//koniec partycjinuj
@@ -139,6 +155,18 @@ public class quickSort {
 	}//koniec metody wyznacz pivot
 	
 	
+	public void InkrementujLiczbeZamian() {
+		this.liczbaZamian++;
+	}
+	
+	
+	public int getMaxWyokoscStosu() { return maxWyokoscStosu; }
+	public int getLiczbaZamian() { return liczbaZamian; }
+	public ArrayList<Integer> getLista(){ return lista; }
+	
+	public void setMaxWyokoscStosu(int maxWyokoscStosu) { this.maxWyokoscStosu = maxWyokoscStosu; }
+	public void setLiczbaZamian(int liczbaZamian) { this.liczbaZamian = liczbaZamian; }
+	public void setLista(ArrayList<Integer> lista) { this.lista = lista; }
 	
 }//koniec klasy
 
