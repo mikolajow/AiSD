@@ -1,8 +1,8 @@
+package klasy;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -11,12 +11,18 @@ public class quickSort {
 	private ArrayList<Integer> lista;
 	private int maxWyokoscStosu;
 	private int liczbaZamian;
+	private File plik;
+	private String wersja;
 	
-	
-	/**
-	 * @param plik
-	 */
+	public String getWersja() {return wersja;}
+	public void setWersja(String wersja) {this.wersja = wersja;}
+	public File getPlik() {return plik;}
+	public void setPlik(File plik) {this.plik = plik;}
+
+
+
 	public quickSort(File plik) {
+		this.plik = plik;
 		this.maxWyokoscStosu = 0;
 		this.liczbaZamian = 0;
 		this.lista = new ArrayList<>();
@@ -60,13 +66,14 @@ public class quickSort {
             int koniec = stack.pop();
             int poczatek = stack.pop();
             
-    		int IndexPivota = wyznaczIndexPivota(poczatek , koniec , wersja);
             
     		//pomijamy przypadek gdy pivot porównuje sie z samym sob¹
             if( koniec <= poczatek ){
                 continue;
             }
-    		
+            
+            
+    		int IndexPivota = wyznaczIndexPivota(poczatek , koniec , wersja);
             
             int granica = partycjonuj(poczatek, koniec, IndexPivota);
             
@@ -95,6 +102,7 @@ public class quickSort {
 		
 		//ustawiam pivot na koncu  listy
 		//bo w zale¿noœci od "wersji" mo¿e byc w ró¿nych miejscach
+		
 		Collections.swap(lista, indexKoncowy, IndexPivota);
 		
 		int indexLewy =indexPoczatkowy;
@@ -102,9 +110,9 @@ public class quickSort {
 		 
 		while(indexLewy <= indexPrawy) {
 			
-			while( indexLewy < lista.size() && lista.get(indexLewy) <= pivot ) {
+			while( indexLewy < indexKoncowy && lista.get(indexLewy) <= pivot ) {
 				indexLewy++;}
-			while(	lista.get(indexPrawy) > pivot ) {
+			while( indexPrawy >= indexPoczatkowy && lista.get(indexPrawy) > pivot ) {
 			 	indexPrawy--;}
 		 
 			if( indexLewy < indexPrawy ) {
@@ -135,24 +143,46 @@ public class quickSort {
 		switch (wersja) {
 		case 1:
 			 pivot  = indexKoncowy;
+			 this.wersja = "koncowy element";
 			break;
 		case 2:
 			int index1 = ThreadLocalRandom.current().nextInt(indexPoczatkowy, indexKoncowy + 1) ;
-			if ( index1 > indexPoczatkowy && index1 < indexKoncowy )
+			if ( index1 > indexPoczatkowy && index1 < indexKoncowy ) {
 				pivot  = index1;
-			else pivot  = indexKoncowy;
+			} else {pivot  = indexKoncowy;}
+			this.wersja = "random element";
 			break;
 		default :
-			int index = (lista.get(indexPoczatkowy) + lista.get(indexKoncowy) + lista.get((indexPoczatkowy + indexKoncowy)/2))/3;
-			if ( index > indexPoczatkowy && index < indexKoncowy )
-				pivot  = index;
+			if (  Math.abs(indexPoczatkowy - indexKoncowy) >= 2 )//minimum 3 elementy np o indexach 0,1,2 lub 6,7,8
+				pivot  = IndexMediany(indexPoczatkowy, indexKoncowy);
 			else pivot  = indexKoncowy;
+			this.wersja = "mediana";
 			break;
-		}
-		//koniec ustalania wersji	
+		}//koniec ustalania wersji	
 		
 		return pivot;
 	}//koniec metody wyznacz pivot
+	
+	
+	private int IndexMediany(int indexPoczatkowy, int indexKoncowy) {
+		int index = 0;
+		ArrayList<Integer> tab = new ArrayList<>();
+		tab.add(lista.get(indexPoczatkowy));
+		tab.add(lista.get(indexKoncowy));
+		tab.add(lista.get(  (indexPoczatkowy + indexKoncowy)/2 )); //element ze srodka
+		Collections.sort(tab);
+		
+		int szukanaWartoscMediany = tab.get(1);
+		
+		if ( lista.get(indexPoczatkowy) == szukanaWartoscMediany ) {
+			index = indexPoczatkowy;
+		}else if ( lista.get(indexKoncowy) == szukanaWartoscMediany ) {
+			index = indexKoncowy;
+		} else {
+			index = (indexPoczatkowy + indexKoncowy)/2;
+		}
+		return index;
+	}//koniec element ze srodka
 	
 	
 	public void InkrementujLiczbeZamian() {

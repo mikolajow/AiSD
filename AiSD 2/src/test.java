@@ -6,9 +6,9 @@ public class test {
 	public static void main(String[] args) {
 		
 		quickSorrt test = new quickSorrt(new File("z2data1.csv"));
-		quickSorrt test2 = new quickSorrt(new File("z2data2.csv"));
+		quickSorrt test2 = new quickSorrt(new File("z3data11.csv"));
 		quickSorrt odCollections = new quickSorrt(new File("z2data1.csv"));
-		quickSorrt odCollections2 = new quickSorrt(new File("z2data2.csv"));
+		quickSorrt odCollections2 = new quickSorrt(new File("z3data11.csv"));
 		
 		Collections.sort(odCollections.getLista());
 		Collections.sort(odCollections2.getLista());
