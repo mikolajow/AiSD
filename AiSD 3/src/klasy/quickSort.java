@@ -104,6 +104,7 @@ public class quickSort {
 		//bo w zale¿noœci od "wersji" mo¿e byc w ró¿nych miejscach
 		
 		Collections.swap(lista, indexKoncowy, IndexPivota);
+		//InkrementujLiczbeZamian();
 		
 		int indexLewy =indexPoczatkowy;
 		int indexPrawy = indexKoncowy - 1;
@@ -128,7 +129,7 @@ public class quickSort {
 			index++;
 		}
 		Collections.swap(lista,index, indexKoncowy);
-		InkrementujLiczbeZamian();
+		//InkrementujLiczbeZamian();
 		return index;
 		
 	}//koniec partycjinuj
