@@ -52,8 +52,8 @@ public class quickSort {
 	
 	public void sortuj( int indexPoczatkowy, int indexKoncowy, int wersja) {
 		
-		//dodajemy na poczatku pierwszy przedzia³
-		//¿eby zadzia³a³a pêtla
+		//dodajemy na poczatku pierwszy przedziaï¿½
+		//ï¿½eby zadziaï¿½aï¿½a pï¿½tla
         stos stack = new stos();
         stack.push(0);
         stack.push(indexKoncowy);
@@ -77,7 +77,7 @@ public class quickSort {
             
             int granica = partycjonuj(poczatek, koniec, IndexPivota);
             
-            //dodajemy nowy przedzia³y na stos
+            //dodajemy nowy przedziaï¿½y na stos
             stack.push(granica + 1);
             stack.push(koniec);
 
@@ -101,7 +101,7 @@ public class quickSort {
 		int pivot = lista.get(IndexPivota);
 		
 		//ustawiam pivot na koncu  listy
-		//bo w zale¿noœci od "wersji" mo¿e byc w ró¿nych miejscach
+		//bo w bo w zaleznosci od wersji moze byc w roznym miejscu 
 		
 		Collections.swap(lista, indexKoncowy, IndexPivota);
 		
@@ -184,10 +184,10 @@ public class quickSort {
 		return index;
 	}//koniec element ze srodka
 	
-	
+	//metoda inkrementujÄ…ca liczbe zmian
 	public void InkrementujLiczbeZamian() {
 		this.liczbaZamian++;
-	}
+	}//koniec inkrementowania zmian
 	
 	
 	public int getMaxWyokoscStosu() { return maxWyokoscStosu; }
