@@ -1,13 +1,17 @@
 package pakiet_1;
 
+import java.util.ArrayList;
+
 public class trasa {
 	
 	private int liczbaPrzesiadek;
 	private int dlugoscTrasy;
 	private String poczatek;
 	private String aktualnaTrasa;
+	private ArrayList<String> stacje;
 	
 	public trasa(String p) {
+		this.stacje = new ArrayList<>();
 		this.liczbaPrzesiadek = 0;
 		this.dlugoscTrasy = 0;
 		this.poczatek = p;
@@ -15,6 +19,10 @@ public class trasa {
 	}//koniec konstruktora
 	
 	public trasa(trasa t) {
+		this.stacje = new ArrayList<>();
+		for ( String s : t.getStacje() ) {
+			this.stacje.add(s);
+		}//koniec for
 		this.liczbaPrzesiadek = t.getLiczbaPrzesiadek();
 		this.dlugoscTrasy = t.getDlugoscTrasy();
 		this.poczatek = t.getPoczatek();
@@ -23,6 +31,14 @@ public class trasa {
 	
 	
 	// GETTERY I SETTERY
+
+	public ArrayList<String> getStacje() {
+		return stacje;
+	}
+
+	public void setStacje(ArrayList<String> stacje) {
+		this.stacje = stacje;
+	}
 
 	public int getLiczbaPrzesiadek() {
 		return liczbaPrzesiadek;

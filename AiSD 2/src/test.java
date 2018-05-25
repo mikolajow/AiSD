@@ -6,9 +6,9 @@ public class test {
 	public static void main(String[] args) {
 		
 		quickSorrt test = new quickSorrt(new File("z2data1.csv"));
-		quickSorrt test2 = new quickSorrt(new File("z3data11.csv"));
+		quickSorrt test2 = new quickSorrt(new File("z2data2.csv"));
 		quickSorrt odCollections = new quickSorrt(new File("z2data1.csv"));
-		quickSorrt odCollections2 = new quickSorrt(new File("z3data11.csv"));
+		quickSorrt odCollections2 = new quickSorrt(new File("z2data2.csv"));
 		
 		Collections.sort(odCollections.getLista());
 		Collections.sort(odCollections2.getLista());
@@ -48,8 +48,8 @@ public class test {
 		
 		System.out.println("Wyniki dla pierwszych danych: ");
 		System.out.println("Rozmiar = " + test.getLista().size());
-		System.out.println("Wartoœæ Maxymalna = " + test.getLista().get(test.getLista().size() -1) );
-		System.out.println("Wartoœæ Minimalna = " + test.getLista().get(0) );
+		System.out.println("Wartoï¿½ï¿½ Maxymalna = " + test.getLista().get(test.getLista().size() -1) );
+		System.out.println("Wartoï¿½ï¿½ Minimalna = " + test.getLista().get(0) );
 		System.out.println("Mediana = " + test.Mediana());
 		System.out.println("Histogram 1 : ");
 		test.histogram(10);
@@ -58,8 +58,8 @@ public class test {
 		
 		System.out.println("Wyniki dla drugich danych: ");
 		System.out.println("Rozmiar = " + test2.getLista().size());
-		System.out.println("Wartoœæ Maxymalna = " + test2.getLista().get(test2.getLista().size() -1) );
-		System.out.println("Wartoœæ Minimalna = " + test2.getLista().get(0) );
+		System.out.println("Wartoï¿½ï¿½ Maxymalna = " + test2.getLista().get(test2.getLista().size() -1) );
+		System.out.println("Wartoï¿½ï¿½ Minimalna = " + test2.getLista().get(0) );
 		System.out.println("Mediana = " + test2.Mediana());
 		System.out.println("Histogram 2 : " );
 		

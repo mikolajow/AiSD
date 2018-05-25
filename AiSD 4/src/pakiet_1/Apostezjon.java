@@ -1,13 +1,19 @@
-package pakiet_1;
+ package pakiet_1;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 
 public class Apostezjon {
 	
 	private HashMap<String, HashMap<String, Integer>> mapa;
 	private String pocz;
+	private ArrayList<trasa> wyniki;
+	
 	
 	public Apostezjon() {
+		this.wyniki = new ArrayList<>();
 		this.mapa= new HashMap<>();
 		wypelnij();
 	}//koniec konstruktora
@@ -18,16 +24,33 @@ public class Apostezjon {
 		this.pocz = poczatek;
 		szukaj(poczatek, koniec, new trasa("") );
 		
+		//sortuje wyniki
+		Collections.sort(wyniki, new Comparator<trasa>() {
+
+			@Override
+			public int compare(trasa o1, trasa o2) {
+				return o1.getDlugoscTrasy() - o2.getDlugoscTrasy();
+			}//koniec compare
+		});//koniec sortowania
+		
+		for ( trasa t : wyniki ) {
+			System.out.print("trasa = ");
+			for ( String s: t.getStacje() ) {
+				System.out.printf( "%-14s", s  );
+			}//koniec for
+			System.out.println( "liczba przesiadek = " + t.getLiczbaPrzesiadek() + "\t" + "d³ugoœæ trasy = " + t.getDlugoscTrasy() );
+		}//koniec for
+		
 	}//koniec szukaj po³¹czenia
 	
 	private void szukaj( String poczatek, String koniec, trasa trasa ) {
 		
-		trasa.setAktualnaTrasa(trasa.getAktualnaTrasa()+ "\t" + poczatek);
+		trasa.getStacje().add(poczatek);
 		
 		if ( mapa.get(poczatek).get(koniec) != null ) {
 			trasa.setDlugoscTrasy(trasa.getDlugoscTrasy() + mapa.get(poczatek).get(koniec) );
-			trasa.setAktualnaTrasa(trasa.getAktualnaTrasa() + "\t" + koniec );
-			System.out.println("trasa = " + trasa.getAktualnaTrasa() + "\t" + "liczba przesiadek = " + trasa.getLiczbaPrzesiadek() + "\t" + "d³ugoœæ trasy = " + trasa.getDlugoscTrasy() );
+			trasa.getStacje().add(koniec);
+			wyniki.add(trasa);
 		}//koniec if
 		
 		
@@ -41,6 +64,12 @@ public class Apostezjon {
 		}//koniec if else
 			
 	}//koniec szukaj
+	
+	
+	
+	
+	
+	
 	
 	
 	private void wypelnij() {
