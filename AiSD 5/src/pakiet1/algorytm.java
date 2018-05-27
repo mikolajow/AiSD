@@ -4,14 +4,17 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class algorytm {
 	
 	private int liczbaSzaf;
 	private int[][] macierz;
+	private int wielkoscPopulacji;
 	private ArrayList<korytarz> populacja;
 	private ArrayList<korytarz> nowaPopulacja;
-	
+	private double sredniaDrogaPopulacji;
 	
 	public algorytm( String nazwaPliku , int wielkoscPopulacji ) {
 		
@@ -51,16 +54,83 @@ public class algorytm {
 		}catch (Exception e) {
 		}// koniec catch
 		
-        this.liczbaSzaf = macierz.length;
+        this.liczbaSzaf = macierz.length - 1;
         populacja = new ArrayList<>();
         nowaPopulacja = new ArrayList<>();
         
         //losuje losowa populacje na starcie
         for( int i = 0; i < wielkoscPopulacji; i++ ) {
-        	populacja.add(new korytarz(this.liczbaSzaf));
+        	populacja.add(new korytarz(this.liczbaSzaf, this.macierz ));
         }//koniec for
-		
+		this.wielkoscPopulacji = wielkoscPopulacji;
 	}//koniec konstruktora
+	
+	
+	public void liczSredniaDrogeDlaPopulacji() {
+		double srednia = 0;
+		
+		for ( korytarz k : populacja ) {
+			srednia = srednia + k.getDrogaDoPokonania();
+		}//koniec for
+		
+		this.sredniaDrogaPopulacji = srednia/populacja.size();
+	}//koniec sredniej drogi
+	
+	
+	
+	public void generujNowaPopulacje(int ileRazy){		
+		for(int i = 0; i < ileRazy; i++) {
+			
+			liczSredniaDrogeDlaPopulacji();
+			
+			for (korytarz k : populacja) {
+				k.wyznaczWspolczynnikKlonowania(sredniaDrogaPopulacji);
+			}//koniec for
+			
+			//sortujemy aktualna populacje po wspó³czynniku klonowania
+			Collections.sort(populacja, new Comparator<korytarz>() {
+				@Override
+				public int compare(korytarz o1, korytarz o2) {
+					return o2.getWspolczynnikKolonowania() - o1.getWspolczynnikKolonowania();
+				}
+			});;
+			
+			int j = 0 ;
+			
+			//WYNIKIEM WHILA MOZE BYC ZA DUZOO W POPULACJI TRZEBA BEDZIE OSTATNIE DODANE USUNAC!!!!
+			while( j < populacja.size() && nowaPopulacja.size() <= wielkoscPopulacji ) {
+				korytarz aktualny = populacja.get(j);
+				int IleKlonow = aktualny.getWspolczynnikKolonowania();
+				for (int g = 0; g < IleKlonow; g++) {
+					korytarz mutant = aktualny.mutuj();
+					if(mutant.getDrogaDoPokonania() <= aktualny.getDrogaDoPokonania()) {
+						nowaPopulacja.add(mutant);
+					}//koniec if
+					nowaPopulacja.add(aktualny);
+				}//koniec for
+				j++;
+			}//koniec while - dodalem wszystkie kolny
+			
+			while (nowaPopulacja.size() > wielkoscPopulacji) {
+				nowaPopulacja.remove(nowaPopulacja.size()-1);
+			}//koniec while - usówanie nadmiaru osobnikow
+			
+			populacja = nowaPopulacja;
+			nowaPopulacja = new ArrayList<korytarz>();
+		}//koniec for - ile razy mamy generowac nowa populacje
+		
+		//po wygenerowaniu populacji sortujemy tak aby najlepsze rozwiazanie bylo pierwsze
+		Collections.sort(populacja, new Comparator<korytarz>() {
+			@Override
+			public int compare(korytarz o1, korytarz o2) {
+				// TODO Auto-generated method stub
+				return o1.getDrogaDoPokonania() - o2.getDrogaDoPokonania();
+			}//koniec obiektu comparator
+		});;
+		
+	}//koniec generowania nowej populacji
+	
+	
 	
 	
 	
@@ -78,10 +148,26 @@ public class algorytm {
 	public int[][] getMacierz() {
 		return macierz;
 	}
-
-
 	public void setMacierz(int[][] macierz) {
 		this.macierz = macierz;
+	}
+	public int getLiczbaSzaf() {
+		return liczbaSzaf;
+	}
+	public void setLiczbaSzaf(int liczbaSzaf) {
+		this.liczbaSzaf = liczbaSzaf;
+	}
+	public ArrayList<korytarz> getPopulacja() {
+		return populacja;
+	}
+	public void setPopulacja(ArrayList<korytarz> populacja) {
+		this.populacja = populacja;
+	}
+	public ArrayList<korytarz> getNowaPopulacja() {
+		return nowaPopulacja;
+	}
+	public void setNowaPopulacja(ArrayList<korytarz> nowaPopulacja) {
+		this.nowaPopulacja = nowaPopulacja;
 	}
 	
 }//koniec klasy
