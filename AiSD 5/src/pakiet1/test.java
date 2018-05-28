@@ -30,7 +30,10 @@ public class test {
 				System.out.println("wyniki nowej populacji = ");
 				
 				for ( int i = 0; i < alg.getPopulacja().get(0).getUstawienie().length; i++ ) {
-					System.out.print(alg.getPopulacja().get(0).getUstawienie()[i] + ",");
+					int numer = alg.getPopulacja().get(0).getUstawienie()[i];
+					numer = numer + 96;
+					char literka = (char)numer;
+					System.out.print(literka + ",");
 				}//koniec for - wyswietlanie ustawienia
 				
 				System.out.println();

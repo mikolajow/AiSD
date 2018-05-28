@@ -111,6 +111,14 @@ public class algorytm {
 				j++;
 			}//koniec while - dodalem wszystkie kolny
 			
+			Collections.sort(populacja, new Comparator<korytarz>() {
+				@Override
+				public int compare(korytarz o1, korytarz o2) {
+					// TODO Auto-generated method stub
+					return o1.getDrogaDoPokonania() - o2.getDrogaDoPokonania();
+				}//koniec obiektu comparator
+			});;
+			
 			while (nowaPopulacja.size() > wielkoscPopulacji) {
 				nowaPopulacja.remove(nowaPopulacja.size()-1);
 			}//koniec while - usówanie nadmiaru osobnikow
