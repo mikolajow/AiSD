@@ -71,11 +71,15 @@ public class korytarz {
 		return droga/2;
 	}//koniec licz droge
 	
+	
+	
 	public int wyznaczWspolczynnikKlonowania(double srednia) {
 		srednia = Math.floor(srednia);
-		this.wspolczynnikKolonowania = (int)srednia/drogaDoPokonania;
+		this.wspolczynnikKolonowania = (int)(srednia/drogaDoPokonania);
 		return wspolczynnikKolonowania;
 	}//koniec wyznaczania wspolczynnika
+	
+	
 	
 	public korytarz mutuj( ) {
 		korytarz mutant = new korytarz(this);
@@ -90,6 +94,9 @@ public class korytarz {
 		int czajnik = mutant.getUstawienie()[indexPierwszego];
 		mutant.getUstawienie()[indexPierwszego] = mutant.getUstawienie()[indexDrugiego];
 		mutant.getUstawienie()[indexDrugiego] = czajnik;
+		
+		int drogaMutanta = mutant.liczDroge();
+		mutant.setDrogaDoPokonania(drogaMutanta);
 		
 		return mutant;
 	}//koniec mutuj

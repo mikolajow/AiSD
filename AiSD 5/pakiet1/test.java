@@ -7,10 +7,10 @@ public class test {
 		
 		
 		try( Scanner s = new Scanner(System.in) ){
-			System.out.println("Wpisz nazwe pliku lub 1 jesli ma to byc plik dane.txt");
+			System.out.println("Wpisz nazwe pliku lub 1 jesli ma to byc plik test_1.csv");
 			String nazwa = s.nextLine();
 			if (nazwa.equals("1")) {
-				nazwa = "dane.txt";
+				nazwa = "test_1.csv";
 			}//koniec if
 			
 			System.out.println("Wprowadz rozmiar populacji ");
@@ -27,6 +27,8 @@ public class test {
 				alg.generujNowaPopulacje(ileIteracji);
 				
 				System.out.println("Droga do pokonania = " + alg.getPopulacja().get(0).getDrogaDoPokonania());
+				System.out.println("Droga do pokonania = " + alg.getPopulacja().get(alg.getPopulacja().size()-1).getDrogaDoPokonania());
+				System.out.println("rozmiar populacji = " + alg.getPopulacja().size());
 				System.out.println("wyniki nowej populacji = ");
 				
 				for ( int i = 0; i < alg.getPopulacja().get(0).getUstawienie().length; i++ ) {

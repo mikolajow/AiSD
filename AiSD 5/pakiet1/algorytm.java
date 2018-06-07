@@ -52,6 +52,8 @@ public class algorytm {
 	        	i++;
 	        }//koniec while
 		}catch (Exception e) {
+			//System.out.println("Problem");
+			//e.printStackTrace();
 		}// koniec catch
 		
         this.liczbaSzaf = macierz.length - 1;
@@ -106,8 +108,8 @@ public class algorytm {
 					if(mutant.getDrogaDoPokonania() <= aktualny.getDrogaDoPokonania()) {
 						nowaPopulacja.add(mutant);
 					}//koniec if
-					nowaPopulacja.add(aktualny);
 				}//koniec for
+				nowaPopulacja.add(aktualny);
 				j++;
 			}//koniec while - dodalem wszystkie kolny
 			
@@ -123,8 +125,8 @@ public class algorytm {
 				nowaPopulacja.remove(nowaPopulacja.size()-1);
 			}//koniec while - usówanie nadmiaru osobnikow
 			
-			populacja = nowaPopulacja;
-			nowaPopulacja = new ArrayList<korytarz>();
+			this.populacja = nowaPopulacja;
+			this.nowaPopulacja = new ArrayList<korytarz>();
 		}//koniec for - ile razy mamy generowac nowa populacje
 		
 		//po wygenerowaniu populacji sortujemy tak aby najlepsze rozwiazanie bylo pierwsze
